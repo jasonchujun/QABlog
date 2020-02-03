@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}详情{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for("static",filename="css/detail.css") }}">
+{% endblock %}
+{% block main %}
+    <h3 class="page-title">{{ question.title }}</h3>
+    <p class="ques-info">
+        <span class="ques-author">作者：{{ question.author.username }}</span>
+        <span class="ques-time">时间：{{ question.create_time }}</span>
+    </p>
+    <hr>
+    <p class="ques-content" style="white-space: pre-wrap">{{ question.content }}</p>
+    <hr>
+    <h4 class="">评论：({{ count }})</h4>
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+    {% endfor %}
+    <form action="{{ url_for("comment",question_id=question.id) }}" method="post">
+        <div class="form-group">
+            <textarea name="comment" rows="5" class="form-control" placeholder="请填写评论"></textarea>
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary">评论</button>
+        </div>
+    </form>
+    <hr class="hr2">
+    <div>
+        <ul class="comment-ul">
+            {% for com in comments %}
+                <li>
+                    <div class="com-info">
+                        <img src="{{ url_for("static",filename="imgs/dntx.png") }}" class="com-pic">
+                        <span class="com-author">评论人：{{ com.author.username }}</span>
+                        <span class="com-time">评论时间：{{ com.comment_time }}</span>
+                    </div>
+                    <p class="com-content" style="white-space: pre-wrap">{{ com.content }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+{% endblock %}

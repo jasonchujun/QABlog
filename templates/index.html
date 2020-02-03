@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}首页{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for("static",filename="css/index.css") }}">
+{% endblock %}
+{% block main %}
+    <ul>
+        {% for message in get_flashed_messages() %}
+            {{ message }}
+        {% endfor %}
+        {% for con in context %}
+            <li class="que-li">
+                <div class="pict-group">
+                    <img src="{{ url_for("static",filename="imgs/dntx.png") }}" class="pict">
+                </div>
+                <div class="que-group">
+                    <p class="que-title"><a href="{{ url_for("detail",ques_id=con.id) }}">{{ con.title }}</a></p>
+                    <p class="que-content">{{ con.content }}</p>
+                </div>
+                <div class="que-info">
+                    <span class="que-author">{{ con.author.username }}</span>
+                    <span class="que-time">{{ con.create_time }}</span>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+    <div class="bot-page">
+    </div>
+{% endblock %}

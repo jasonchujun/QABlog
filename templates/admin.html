@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}管理人员{% endblock %}
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for("static",filename="css/admin.css") }}">
+{% endblock %}
+{% block main %}
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">问答信息管理</div>
+        {% for message in get_flashed_messages() %}
+            {{ message }}
+        {% endfor %}
+        <table class="info-table">
+            <div class="first-tr">
+                <p class="p1">标题</p>
+                <p class="p2">内容</p>
+                <p class="p3">作者</p>
+                <p class="p4">评论数</p>
+                <p class="p5">操作</p>
+                <hr class="hr1">
+                {% for question in questions %}
+                    <div class="que-tr">
+                        <p class="que-tit" style="margin-left: 4px">{{ question.title }}</p>
+                        <p class="que-con">{{ question.content }}</p>
+                        <p class="que-aut">{{ question.author.username }}</p>
+                        {% if question.count %}
+                            <p class="que-cou">{{ question.count }}</p>
+                        {% else %}
+                            <p class="que-cou">{{ 0 }}</p>
+                        {% endif %}
+                        <p class="que-opt" style="margin-right: 4px">
+                            <a href="{{ url_for("admin_del",que_id=question.id) }}">delete</a>
+                        </p>
+                        <hr class="hr2">
+                    </div>
+                {% endfor %}
+            </div>
+        </table>
+    </div>
+{% endblock %}
